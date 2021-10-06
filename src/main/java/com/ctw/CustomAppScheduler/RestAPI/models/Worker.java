@@ -1,4 +1,4 @@
-package com.ctw.CustomAppScheduler.RestAPI.model;
+package com.ctw.CustomAppScheduler.RestAPI.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +19,10 @@ public class Worker {
     private int rotations;
     @Column (nullable = false, length = 10)
     private boolean exp;
-
-
+    @Column (nullable = false, length = 10)
+    private boolean active;
+    @Column (nullable = false, length = 10)
+    private boolean vacations;
 
 
 
@@ -60,5 +62,16 @@ public class Worker {
     public void setExp(boolean exp) {
         this.exp = exp;
     }
-
+    public boolean isActive() {
+        return active;
+    }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+    public boolean isVacations() {
+        return vacations;
+    }
+    public void setVacations(boolean vacations) {
+        this.vacations = vacations;
+    }
 }

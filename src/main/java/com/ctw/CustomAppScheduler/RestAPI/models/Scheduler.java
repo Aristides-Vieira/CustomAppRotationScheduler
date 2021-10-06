@@ -1,6 +1,4 @@
-package com.ctw.CustomAppScheduler.RestAPI.model;
-
-import org.apache.logging.log4j.message.StringFormattedMessage;
+package com.ctw.CustomAppScheduler.RestAPI.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

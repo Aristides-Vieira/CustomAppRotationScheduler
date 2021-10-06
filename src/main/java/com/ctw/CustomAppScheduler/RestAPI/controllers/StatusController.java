@@ -1,4 +1,4 @@
-package com.ctw.CustomAppScheduler.RestAPI.controller;
+package com.ctw.CustomAppScheduler.RestAPI.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

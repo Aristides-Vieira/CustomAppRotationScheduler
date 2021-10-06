@@ -1,6 +1,6 @@
-package com.ctw.CustomAppScheduler.RestAPI.repository;
+package com.ctw.CustomAppScheduler.RestAPI.repositories;
 
-import com.ctw.CustomAppScheduler.RestAPI.model.Scheduler;
+import com.ctw.CustomAppScheduler.RestAPI.models.Scheduler;
 import org.springframework.data.repository.CrudRepository;
 
 public interface SchedulerRepository extends CrudRepository<Scheduler, String>  {
