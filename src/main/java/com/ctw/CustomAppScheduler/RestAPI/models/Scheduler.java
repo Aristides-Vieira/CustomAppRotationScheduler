@@ -10,9 +10,9 @@ public class Scheduler {
     @Id
     private String date;
     @Column
-    private String med;
+    private String full;
     @Column
-    private String led;
+    private String support;
 
 
 
@@ -25,15 +25,15 @@ public class Scheduler {
         this.date = date;
     }
     public String getMed() {
-        return med;
+        return full;
     }
-    public void setMed(String med) {
-        this.med = med;
+    public void setMed(String full) {
+        this.full = full;
     }
     public String getLed() {
-        return led;
+        return support;
     }
-    public void setLed(String led) {
-        this.led = led;
+    public void setLed(String support) {
+        this.support = support;
     }
 }

@@ -65,4 +65,26 @@ public class WorkerService {
             workerRepository.save(w);
         }
     }
+
+    public void removeSupportRotation(String qxNumber) {
+
+        if (workerRepository.findById(qxNumber).isPresent()) {
+            Worker w = workerRepository.findById(qxNumber).get();
+            int amount = w.getSupportRotations();
+            w.setSupportRotations(amount - 1);
+
+            workerRepository.save(w);
+        }
+    }
+
+    public void addSupportRotation(String qxNumber) {
+
+        if (workerRepository.findById(qxNumber).isPresent()) {
+            Worker w = workerRepository.findById(qxNumber).get();
+            int amount = w.getSupportRotations();
+            w.setSupportRotations(amount + 1);
+
+            workerRepository.save(w);
+        }
+    }
 }

@@ -17,6 +17,8 @@ public class Worker {
     private String password;
     @Column (nullable = false, length = 50)
     private int rotations;
+    @Column (nullable = false, length = 50)
+    private int supportRotations;
     @Column (nullable = false, length = 10)
     private boolean exp;
     @Column (nullable = false, length = 10)
@@ -73,5 +75,11 @@ public class Worker {
     }
     public void setVacations(boolean vacations) {
         this.vacations = vacations;
+    }
+    public int getSupportRotations(){
+        return supportRotations;
+    }
+    public void setSupportRotations(int amount){
+        supportRotations = amount;
     }
 }
