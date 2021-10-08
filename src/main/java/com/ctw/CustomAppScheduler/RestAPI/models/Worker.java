@@ -21,7 +21,7 @@ public class Worker {
     private int supportRotations;
     @Column (nullable = false, length = 10)
     private boolean exp;
-    @Column (nullable = false, length = 10)
+    @Column (length = 10)
     private boolean active;
     @Column (nullable = false, length = 10)
     private boolean vacations;

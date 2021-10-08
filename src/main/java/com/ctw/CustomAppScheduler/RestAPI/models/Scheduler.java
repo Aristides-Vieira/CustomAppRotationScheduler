@@ -24,16 +24,16 @@ public class Scheduler {
     public void setDate(String date) {
         this.date = date;
     }
-    public String getMed() {
+    public String getFull() {
         return full;
     }
-    public void setMed(String full) {
+    public void setFull(String full) {
         this.full = full;
     }
-    public String getLed() {
+    public String getSupport() {
         return support;
     }
-    public void setLed(String support) {
+    public void setSupport(String support) {
         this.support = support;
     }
 }
