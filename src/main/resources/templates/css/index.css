@@ -1,0 +1,50 @@
+.title{
+    padding-top: 0.5cm;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: whitesmoke;
+}
+
+.medtable{
+    padding-top: 10px;
+    width: 45%;
+    float: left;
+    margin: auto;
+}
+.ledtable{
+    padding-top: 10px;
+    width: 45%;
+    float:right;
+    margin: auto;
+}
+
+.teams{
+    padding-top: 0.5cm;
+    text-align: center;
+    color:whitesmoke;
+}
+
+.titles {
+    padding-top: 50px;
+    text-align: center;
+    width: 45%;
+    float: center;
+    margin: auto;
+    color:whitesmoke;
+}
+
+.buttons{
+    padding-top: 250px;
+    text-align: center;
+    width: 45%;
+    float: center;
+    margin: auto;
+    color: whitesmoke;
+}
+
+.schedulesDiv{
+    padding-top: 20px;
+    width: 70%;
+    float: center;
+    margin: auto;
+}

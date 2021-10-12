@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class WorkerController {
 
@@ -18,14 +19,14 @@ public class WorkerController {
     @Autowired
     private WorkerService workerService;
 
-    @GetMapping(path = "/api/worker/{qxNumber}")
+    @GetMapping(path = "/worker/{qxNumber}")
     public ResponseEntity getUser(@PathVariable("qxNumber") String qxNumber) {
         return repository.findById(qxNumber)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping(path = "/api/worker/save")
+    @PostMapping(path = "/worker/save")
     public ResponseEntity save(@RequestBody Worker worker) {
             if(repository.findById(worker.qxNumber).isEmpty()) {
                 repository.save(worker);
@@ -35,7 +36,7 @@ public class WorkerController {
             }
     }
 
-    @GetMapping(path = "/api/worker/all")
+    @GetMapping(path = "/worker/all")
     public ResponseEntity getAllWorkers() {
 
         Collection<Worker> collection = new ArrayList<>();
@@ -51,7 +52,7 @@ public class WorkerController {
         }
     }
 
-    @PutMapping(path = "/api/worker/vacation/{qxNumber}")
+    @PutMapping(path = "/worker/vacation/{qxNumber}")
     public ResponseEntity setVacation(@PathVariable("qxNumber") String qxNumber) {
 
         if(workerService.setVacation(qxNumber)) {
@@ -61,7 +62,7 @@ public class WorkerController {
         }
     }
 
-    @PutMapping(path = "/api/worker/active/{qxNumber}")
+    @PutMapping(path = "/worker/active/{qxNumber}")
     public ResponseEntity setActive(@PathVariable("qxNumber") String qxNumber) {
 
         if(workerService.setInactive(qxNumber)) {

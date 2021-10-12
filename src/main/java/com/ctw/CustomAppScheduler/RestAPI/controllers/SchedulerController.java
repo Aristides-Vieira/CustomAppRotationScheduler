@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 public class SchedulerController {
 
@@ -18,7 +18,7 @@ public class SchedulerController {
     @Autowired
     private WorkerService workerService;
 
-    @GetMapping(path = "/api/scheduler/{date}")
+    @GetMapping(path = "/scheduler/{date}")
     public ResponseEntity getSchedule(@PathVariable("date") String date) {
         String fixDate = date.replaceAll("-", "/");
         return schedulerRepository.findById(fixDate)
@@ -26,7 +26,7 @@ public class SchedulerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping(path = "/api/scheduler/save")
+    @PostMapping(path = "/scheduler/save")
     public ResponseEntity save(@RequestBody Scheduler scheduler) {
         if(schedulerRepository.findById(scheduler.getDate()).isEmpty()) {
             schedulerRepository.save(scheduler);
@@ -53,7 +53,7 @@ public class SchedulerController {
         }
     }
 
-    @GetMapping(path = "/api/scheduler/all")
+    @GetMapping(path = "/scheduler/all")
     public ResponseEntity getAllSchedules() {
 
         Collection<Scheduler> collection = new ArrayList<>();
@@ -69,7 +69,7 @@ public class SchedulerController {
         }
     }
 
-    @DeleteMapping(path = "/api/scheduler/delete/{date}")
+    @DeleteMapping(path = "/scheduler/delete/{date}")
     public ResponseEntity deleteSchedule(@PathVariable("date") String date) {
         String fixDate = date.replaceAll("-", "/");
         if (schedulerRepository.existsById(fixDate)) {
