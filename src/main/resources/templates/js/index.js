@@ -1,10 +1,12 @@
 var API_URL = "http://127.0.0.1:8080/customapp/api"
 
 var team = {};
+var teamObject = {};
 
 $(document).ready(function(){
     getTeam();
     loadSchedules();
+    populateVacations(); 
 
 })
 
@@ -33,7 +35,6 @@ function populateSchedules (data) {
         
         
         var fullArray = schedule.full.split(",");
-        console.log(fullArray);
         fullArray.forEach(element => {
             if(fullWorkers != "") {
                 fullWorkers = fullWorkers + ", "; 
@@ -65,7 +66,7 @@ function populateSchedules (data) {
 function getTeam() {
     $.ajax({
         url: API_URL + '/worker/all',
-        async: true,
+        async: false,
         success: populateTeam,
         error: errorCallBack
     })
@@ -76,6 +77,7 @@ function populateTeam(data) {
 
 
         team[worker.qxNumber] = worker.firstName + " " + worker.lastName; 
+        teamObject[worker.qxNumber] = worker;
 
 
         if(worker.exp) {
@@ -100,8 +102,47 @@ function populateTeam(data) {
 };
 
 
+function populateVacations() {
+    
+    var baseColor = "000000";
+
+    for (const key in team) {
+
+        var color = baseColor;
+
+        if(teamObject[key].vacations) {
+            color = "yellow"
+        } else if (teamObject[key].inactive) {
+            color = "black"
+        }
+
+        $("#userDropDown").append(
+            '<li><a id="'+key+'" class="dropdown-item" href="#" onclick="vacButton(id)" style="color:'+ color + '">' + teamObject[key].firstName + " " + teamObject[key].lastName + '</a></li>'
+        )
+    }
+
+}
+    
+
+
+
 function errorCallBack(request, status, error) {
     console.log('fail');
 };
     
 
+
+
+var vacButton = function(key) {
+
+  
+
+        $.ajax ({
+            type: "PUT",
+            url: API_URL + "/worker/vacation/" + key,
+            async: true,
+            success: location.reload(),
+            error: errorCallBack
+        })
+    
+}
