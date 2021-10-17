@@ -78,8 +78,7 @@ public class SchedulerController {
 
     @DeleteMapping(path = "/scheduler/delete")
     public ResponseEntity deleteSchedule(@Valid @RequestBody Scheduler schedulerInput) {
-
-
+        
         String date = "";
 
         try {
