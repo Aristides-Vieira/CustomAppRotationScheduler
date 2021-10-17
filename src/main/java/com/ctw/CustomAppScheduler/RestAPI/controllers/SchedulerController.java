@@ -4,13 +4,19 @@ import com.ctw.CustomAppScheduler.RestAPI.models.Scheduler;
 import com.ctw.CustomAppScheduler.RestAPI.repositories.SchedulerRepository;
 import com.ctw.CustomAppScheduler.RestAPI.services.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @CrossOrigin(origins = "*")
 @RestController
+@Validated
 public class SchedulerController {
 
     @Autowired
@@ -20,17 +26,20 @@ public class SchedulerController {
 
     @GetMapping(path = "/scheduler/{date}")
     public ResponseEntity getSchedule(@PathVariable("date") String date) {
-        String fixDate = date.replaceAll("-", "/");
-        return schedulerRepository.findById(fixDate)
+        return schedulerRepository.findById(date)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping(path = "/scheduler/save")
-    public ResponseEntity save(@RequestBody Scheduler scheduler) {
-        if(schedulerRepository.findById(scheduler.getDate()).isEmpty()) {
-            schedulerRepository.save(scheduler);
+    public ResponseEntity save(@Valid @RequestBody Scheduler scheduler) {
 
+        if(schedulerRepository.findById(scheduler.getDate()).isEmpty()) {
+            try {
+                schedulerRepository.save(scheduler);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body("Malformed Date. Please use: dd-mm-yyyy");
+            }
             String[] fullWorkers;
             String[] supportWorkers;
 
@@ -71,13 +80,13 @@ public class SchedulerController {
 
     @DeleteMapping(path = "/scheduler/delete/{date}")
     public ResponseEntity deleteSchedule(@PathVariable("date") String date) {
-        String fixDate = date.replaceAll("-", "/");
-        if (schedulerRepository.existsById(fixDate)) {
+
+        if (schedulerRepository.existsById(date)) {
 
             String[] fullWorkers;
             String[] supportWorkers;
 
-            Scheduler scheduler = schedulerRepository.findById(fixDate).get();
+            Scheduler scheduler = schedulerRepository.findById(date).get();
 
             String full = scheduler.getFull();
             String support = scheduler.getSupport();
@@ -92,7 +101,7 @@ public class SchedulerController {
                 workerService.removeSupportRotation(s);
             }
 
-            schedulerRepository.deleteById(fixDate);
+            schedulerRepository.deleteById(date);
 
             return ResponseEntity.ok().body("Entry Successfully deleted");
         } else {

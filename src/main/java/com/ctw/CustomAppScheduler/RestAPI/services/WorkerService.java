@@ -34,7 +34,7 @@ public class WorkerService {
 
             Worker w = workerRepository.findById(qxNumber).get();
             boolean active = w.isActive();
-            w.setVacations(!active);
+            w.setActive(!active);
 
             workerRepository.save(w);
 
