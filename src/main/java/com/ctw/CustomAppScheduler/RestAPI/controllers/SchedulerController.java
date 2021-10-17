@@ -32,7 +32,7 @@ public class SchedulerController {
     @PostMapping(path = "/scheduler/save")
     public ResponseEntity save(@Valid @RequestBody Scheduler scheduler) {
 
-        if(schedulerRepository.findById(scheduler.getDate()).isEmpty()) {
+        if (schedulerRepository.findById(scheduler.getDate()).isEmpty()) {
             try {
                 schedulerRepository.save(scheduler);
             } catch (Exception e) {
@@ -47,10 +47,10 @@ public class SchedulerController {
             fullWorkers = full.split(",");
             supportWorkers = support.split(",");
 
-            for (String s: fullWorkers) {
+            for (String s : fullWorkers) {
                 workerService.addRotation(s);
             }
-            for (String s: supportWorkers) {
+            for (String s : supportWorkers) {
                 workerService.addSupportRotation(s);
             }
 
@@ -76,15 +76,24 @@ public class SchedulerController {
         }
     }
 
-    @DeleteMapping(path = "/scheduler/delete/{date}")
-    public ResponseEntity deleteSchedule(@PathVariable("date") String date) {
+    @DeleteMapping(path = "/scheduler/delete")
+    public ResponseEntity deleteSchedule(@Valid @RequestBody Scheduler schedulerInput) {
+
+
+        String date = "";
+
+        try {
+            date = schedulerInput.getDate();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Malformed Date. Please use: dd-mm-yyyy");
+        }
 
         if (schedulerRepository.existsById(date)) {
 
+            Scheduler scheduler = schedulerRepository.findById(date).get();
+
             String[] fullWorkers;
             String[] supportWorkers;
-
-            Scheduler scheduler = schedulerRepository.findById(date).get();
 
             String full = scheduler.getFull();
             String support = scheduler.getSupport();
@@ -92,19 +101,20 @@ public class SchedulerController {
             fullWorkers = full.split(",");
             supportWorkers = support.split(",");
 
-            for (String s: fullWorkers) {
+            for (String s : fullWorkers) {
                 workerService.removeRotation(s);
             }
-            for (String s: supportWorkers) {
+            for (String s : supportWorkers) {
                 workerService.removeSupportRotation(s);
             }
 
             schedulerRepository.deleteById(date);
 
             return ResponseEntity.ok().body("Entry Successfully deleted");
+
         } else {
             return ResponseEntity.badRequest().body("Invalid entry");
         }
     }
-
 }
+
